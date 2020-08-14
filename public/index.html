@@ -40,5 +40,22 @@
     </section>
   </div>
 </body>
-
+<script>
+  const getLists = () =>{
+    // let fetchData =  JSON.stringiy({email:"milletbard"})
+    fetch('/lists',{
+      method:"GET",
+      headers:{"Content-Type":"applocation/json"}
+    }).then(res=>{
+      if(res.ok){
+        console.log('success')
+      } else {
+        console.log('faile')
+      }
+    }).catch(e=>{
+      console.log(e)
+    })
+  }
+  getLists()
+</script>
 </html>
