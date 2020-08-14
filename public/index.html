@@ -8,12 +8,10 @@
   <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
     integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
-
-  <title>Newsletter Signup</title>
 </head>
 
 <body>
-  <div class="container">
+  <!-- <div class="container">
     <section class="row mt-5 text-center">
       <div class="col-md-6 m-auto">
         <h1><i class="fas fa-newspaper fa-2x"></i></h1>
@@ -38,24 +36,10 @@
         </form>
       </div>
     </section>
-  </div>
+  </div> -->
 </body>
 <script>
-  const getLists = () =>{
-    // let fetchData =  JSON.stringiy({email:"milletbard"})
-    fetch('/lists',{
-      method:"GET",
-      headers:{"Content-Type":"applocation/json"}
-    }).then(res=>{
-      if(res.ok){
-        console.log('success')
-      } else {
-        console.log('faile')
-      }
-    }).catch(e=>{
-      console.log(e)
-    })
-  }
-  getLists()
+  window.location.replace("/lists")
 </script>
+
 </html>

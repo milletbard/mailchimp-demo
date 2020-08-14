@@ -5,18 +5,33 @@ const fetch = require('node-fetch');
 const app = express();
 var fs = require('fs');
 app.set('view engine', 'ejs');
-app.get('/users/:name', function (req, res) {
-  res.render('index', { // 這邊不用寫 views/index 是因為 express 預設 template 就是會放在 views 資料夾裡面
-    name: req.params.name,
-    items: ['peter', 'luke', 'cake']
-  })
-})
+
+
 
 // Bodyparser Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Static folder
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+app.get('/lists', function (req, rootRes) {
+  fetch('https://us17.api.mailchimp.com/3.0/lists', {
+    method: "GET",
+    headers: {
+      "Authorization": 'Basic 7c743847755da1b3e76bda155aef5765-us17',
+      "Content-Type": "application/json"
+    },
+  }).then(res => {
+    return res.json()
+  }).then(res => {
+    rootRes.render('index', {
+      items: res.lists
+    })
+  })
+})
+
 
 
 function render(filename, params) {
@@ -27,29 +42,12 @@ function render(filename, params) {
   return data;
 }
 
-app.get('/users/lists', (req,response) => {
-  response.send(render('public/index.html', {
-    name: "test"
-  }));
-  fetch('https://us17.api.mailchimp.com/3.0/lists',{
-    method:"GET",
-       headers: {
-      "Authorization": 'Basic 7c743847755da1b3e76bda155aef5765-us17',
-      "Content-Type":"application/json"
-    },
-  }).then(res=>{
-   
-    return res.json()
-  }).then(res=>{
-    response.render('index', { // 這邊不用寫 views/index 是因為 express 預設 template 就是會放在 views 資料夾裡面
-      name: req.params.name,
-      items: ['peter', 'luke', 'cake']
-    })
+// app.get('/users/lists', (req, response) => {
+//   response.send(render('public/index.html', {
+//     name: "test"
+//   }));
 
-
-    console.log(res.lists)
-  })
-})
+// })
 
 // Signup Route
 app.post('/signup', (req, res) => {
@@ -75,7 +73,7 @@ app.post('/signup', (req, res) => {
   //   ]
   // };
 
- 
+
   // const postData = JSON.stringify(data);
 
   // fetch('https://usX.api.mailchimp.com/3.0/lists/<YOUR_AUDIENCE_ID>', {
